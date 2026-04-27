@@ -6,13 +6,40 @@
 
 **Tells you your plan is wrong before you commit time or money.**
 
-Six passes. Severity-ranked findings. Concrete fixes.
+Six passes. Severity-ranked findings. Concrete fixes. Works with every coding agent.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Stars](https://img.shields.io/github/stars/siddsdixit/skeptic-agent?style=social)](https://github.com/siddsdixit/skeptic-agent)
 [![Works with](https://img.shields.io/badge/works_with-Claude_·_Codex_·_Gemini_·_Cursor_·_Aider-E08263)](#install)
 
+> **You spent two weeks on a plan. The skeptic spends 90 seconds telling you what's wrong with it.**
+>
+> Not vibes. Six structured passes. Every finding ranks severity and ships with a concrete fix.
+>
+> Run it on PRDs, decks, architecture docs, contracts, hiring plans, anything you'd be embarrassed to be wrong about.
+
+![skeptic demo](assets/demo.gif)
+
 </div>
+
+---
+
+## The pitch in 10 seconds
+
+```bash
+$ skeptic review pitch.md
+
+11 findings across 6 passes:
+
+  1. perspective inversion       1 critical  1 major
+  3. assumption extraction       1 critical  1 major  1 note
+  4. failure mode sweep          0 critical  2 major  1 minor
+  6. regulatory & liability      1 critical  1 major
+
+  verdict: NOT READY. Fix 3 critical before launch.
+```
+
+Three critical findings the author would have shipped without seeing.
 
 ---
 
@@ -20,10 +47,11 @@ Six passes. Severity-ranked findings. Concrete fixes.
 
 **Anything** that proposes a course of action.
 
-| Code | PRDs | Architecture | Migrations | Pitch decks |
+| | | | | |
 |---|---|---|---|---|
-| **Strategy memos** | **Marketing copy** | **Emails** | **Hiring plans** | **Contracts** |
-| **Trades** | **Roadmaps** | **Pricing** | **Decisions** | **Anything** |
+| Code | PRDs | Architecture | Migrations | Pitch decks |
+| Strategy memos | Marketing copy | Emails | Hiring plans | Contracts |
+| Trades | Roadmaps | Pricing | Decisions | Anything |
 
 If you're about to commit time or money based on a document, run the skeptic first.
 
@@ -42,11 +70,11 @@ Six passes. Each finds a different class of bug.
 06  Regulatory & Liability  →  Where the legal exposure hides.
 ```
 
-Each pass produces findings. Each finding gets a severity, a gap, a "why it matters", and a concrete fix.
+Every finding gets a severity (`CRITICAL` / `MAJOR` / `MINOR` / `NOTE`), a gap, a "why it matters", and a concrete fix.
 
 ---
 
-## Output
+## What a finding looks like
 
 ```text
 ### CRITICAL  Anthropic-native Memory will absorb 80% of value within 6 months
@@ -74,7 +102,8 @@ Plus a **scorecard** (findings per pass) and an **assumptions register** (every 
 
 `skeptic` works in any agent runtime that reads a markdown activation file.
 
-### Claude Code
+<details open>
+<summary><b>Claude Code</b> — recommended</summary>
 
 ```bash
 mkdir -p ~/.claude/skills/skeptic
@@ -84,7 +113,10 @@ curl -sL https://raw.githubusercontent.com/siddsdixit/skeptic-agent/main/SKILL.m
 
 Invoke: `/skeptic <plan-or-file>`
 
-### Codex CLI · Cursor · Aider · OpenCode
+</details>
+
+<details>
+<summary><b>Codex CLI · Cursor · Aider · OpenCode</b></summary>
 
 These read [`AGENTS.md`](https://agents.md) per the spec. Drop it at the root of your project:
 
@@ -95,33 +127,44 @@ curl -sL https://raw.githubusercontent.com/siddsdixit/skeptic-agent/main/AGENTS.
 
 Invoke by asking: "Run the skeptic on this plan."
 
-### Gemini CLI
+</details>
+
+<details>
+<summary><b>Gemini CLI</b></summary>
 
 ```bash
 curl -sL https://raw.githubusercontent.com/siddsdixit/skeptic-agent/main/GEMINI.md \
   > ./GEMINI.md
 ```
 
-### Cursor (legacy versions)
+</details>
+
+<details>
+<summary><b>Cursor (legacy)</b></summary>
 
 ```bash
 curl -sL https://raw.githubusercontent.com/siddsdixit/skeptic-agent/main/.cursorrules \
   > ./.cursorrules
 ```
 
-### ChatGPT / Web Claude
+</details>
+
+<details>
+<summary><b>ChatGPT · Web Claude</b></summary>
 
 Paste [`SKILL.md`](SKILL.md) into a project / custom GPT / system prompt. Then paste your plan and ask for a skeptic review.
 
+</details>
+
 ---
 
-## Use it on...
+## Run it on...
 
 - A **PRD** before kickoff. Find the assumptions before they ship.
 - A **pitch deck** before the fundraise. Find the questions before the GP does.
 - A **migration plan** before the freeze window. Find the data flow that breaks.
 - A **hiring plan** before posting. Find the incentive misalignment.
-- A **marketing email** before send. Find the recipient view.
+- A **marketing email** before send. Find the recipient's view.
 - A **strategic decision** you're emotionally attached to. Find what your chair can't see.
 - A **trade** you're about to make. Find what your enthusiasm hides.
 - A **product launch** before the HN post. Find the critical thread you're not ready for.
@@ -141,8 +184,6 @@ Most decisions die in the gap between what the planner sees and what reality hol
 ---
 
 ## Principles
-
-The agent operates by these rules:
 
 1. **Be specific, not vague.** "Email deliverability might be an issue" is useless. "Sending from `noreply@yourdomain.com` will land in spam because recipients don't recognize the sender, killing the core product loop" is actionable.
 2. **Every finding needs a fix.** Identifying problems without solutions is just complaining.
